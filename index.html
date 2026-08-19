@@ -1,722 +1,536 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Network - Protect Earth</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>纯HTML · 极简简历</title>
+    <!-- 没有任何外部依赖，纯原生 HTML + 内联 CSS -->
     <style>
+        /* 全局重置 & 字体 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        :root {
-            --primary: #2e7d32;
-            --secondary: #4caf50;
-            --accent: #8bc34a;
-            --light: #e8f5e9;
-            --dark: #1b5e20;
-            --text: #333333;
-            --white: #ffffff;
         }
 
         body {
-            background-color: var(--light);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .nav-container {
+            background: #f4f7fb;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            line-height: 1.5;
+            color: #1e293b;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo i {
-            font-size: 2rem;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-        }
-
-        nav ul li {
-            margin-left: 2rem;
-        }
-
-        nav ul li a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 0;
-            position: relative;
-        }
-
-        nav ul li a:hover {
-            color: var(--accent);
-        }
-
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        nav ul li a:hover::after {
+        /* 卡片式简历容器 */
+        .resume-card {
+            max-width: 1000px;
             width: 100%;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.15);
+            padding: 2.5rem 2.8rem;
+            transition: box-shadow 0.2s;
         }
 
-        .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 80vh;
+        /* 页眉区域：头像 + 标题 */
+        .resume-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            border-bottom: 2px solid #eef2f6;
+            padding-bottom: 2rem;
+        }
+
+        .avatar {
+            flex-shrink: 0;
+            width: 110px;
+            height: 110px;
+            background: linear-gradient(145deg, #d9e2ef, #b6c8e0);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            text-align: center;
-            color: var(--white);
+            justify-content: center;
+            font-size: 3.2rem;
+            font-weight: 500;
+            color: #1e3a5f;
+            box-shadow: 0 8px 16px -6px rgba(0, 20, 40, 0.12);
+            user-select: none;
         }
 
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .title-group h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0b1e33;
+            margin-bottom: 0.2rem;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
+        .title-group .subhead {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #3b5b7a;
+            background: #eef4fa;
             display: inline-block;
-            background-color: var(--accent);
-            color: var(--white);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 0.2rem 1.2rem;
+            border-radius: 30px;
+            letter-spacing: 0.2px;
+            margin-top: 0.2rem;
         }
 
-        .btn:hover {
-            background-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        .title-group .contact-short {
+            margin-top: 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem 2rem;
+            font-size: 0.95rem;
+            color: #2c3f58;
         }
 
-        section {
-            padding: 5rem 0;
+        .contact-short span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact-short i {
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        /* 栅格布局：两栏 */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr 2.2fr;
+            gap: 2.2rem 2.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* 左侧栏 */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 通用卡片模块 */
+        .section {
+            background: #fafcff;
+            border-radius: 1.2rem;
+            padding: 0.1rem 0 0.2rem 0;
         }
 
         .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-
-        .section-title p {
-            color: var(--text);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-img {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .about-img img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .about-img:hover img {
-            transform: scale(1.05);
-        }
-
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .about-text p {
-            margin-bottom: 1.5rem;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 2rem 1rem;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat-item i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .stat-item h3 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-item p {
-            color: var(--text);
-        }
-
-        .initiatives {
-            background-color: var(--white);
-        }
-
-        .initiatives-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .initiative-card {
-            background-color: var(--light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .initiative-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .initiative-img {
-            height: 200px;
-            overflow: hidden;
-        }
-
-        .initiative-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .initiative-card:hover .initiative-img img {
-            transform: scale(1.1);
-        }
-
-        .initiative-content {
-            padding: 1.5rem;
-        }
-
-        .initiative-content h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .initiative-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .cta {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: var(--white);
-            text-align: center;
-            padding: 5rem 0;
-        }
-
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta .btn {
-            background-color: var(--white);
-            color: var(--primary);
-        }
-
-        .cta .btn:hover {
-            background-color: var(--accent);
-            color: var(--white);
-        }
-
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--accent);
-        }
-
-        .footer-column p {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links li a {
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links li a:hover {
-            color: var(--accent);
-            padding-left: 5px;
-        }
-
-        .social-links {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: #1a3450;
+            border-bottom: 2px solid #dce5f0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
             display: flex;
-            gap: 1rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: rgba(255, 255, 255, 0.1);
+            gap: 8px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        /* 个人简介 */
+        .profile-text {
+            font-size: 0.98rem;
+            color: #1e3a5a;
+            line-height: 1.6;
+            background: #f0f5fe;
+            padding: 1rem 1.2rem;
+            border-radius: 1rem;
+            border-left: 4px solid #8aadcf;
+        }
+
+        /* 技能标签 */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 8px;
+            margin-top: 0.2rem;
+        }
+
+        .skill-tag {
+            background: #e4edf8;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1d3f62;
+            letter-spacing: 0.2px;
+            border: 1px solid #cfddee;
+            transition: all 0.1s;
+        }
+
+        .skill-tag:hover {
+            background: #d0e0f2;
+            border-color: #9bb9da;
+        }
+
+        /* 语言 / 兴趣 列表 */
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #e2eaf3;
+            font-size: 0.95rem;
+        }
+
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+
+        .info-list .label {
+            font-weight: 500;
+            color: #1f3c5a;
+        }
+
+        .info-list .value {
+            color: #2b4b6e;
+            font-weight: 400;
+        }
+
+        /* 经历 & 教育条目 */
+        .entry {
+            margin-bottom: 1.6rem;
+        }
+
+        .entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .entry-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 0.2rem;
+        }
+
+        .entry-title {
+            font-weight: 650;
+            font-size: 1.05rem;
+            color: #102b44;
+        }
+
+        .entry-sub {
+            font-weight: 500;
+            color: #2e577b;
+            font-size: 0.9rem;
+        }
+
+        .entry-date {
+            font-size: 0.8rem;
+            background: #e9f0f8;
+            padding: 0.15rem 1rem;
+            border-radius: 30px;
+            color: #1b405e;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+
+        .entry-desc {
+            margin-top: 0.3rem;
+            font-size: 0.93rem;
+            color: #1f3a55;
+            line-height: 1.6;
+            padding-left: 0.1rem;
+        }
+
+        .entry-desc ul {
+            padding-left: 1.2rem;
+            margin: 0.2rem 0 0.2rem 0;
+        }
+
+        .entry-desc ul li {
+            margin-bottom: 0.15rem;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e2eaf3;
+            margin: 0.8rem 0;
+        }
+
+        /* 右侧面板中较紧凑的间距 */
+        .right-panel .section {
+            background: transparent;
+            padding: 0;
+        }
+
+        .right-panel .section-title {
+            border-bottom-color: #d0ddee;
+        }
+
+        /* 修饰 */
+        .badge-icon {
+            display: inline-block;
+            background: #c4d7ec;
+            border-radius: 30px;
+            padding: 0 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #123456;
+            letter-spacing: 0.3px;
+        }
+
+        .inline-dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background: #6e8eb0;
             border-radius: 50%;
-            color: var(--white);
-            text-decoration: none;
-            transition: all 0.3s ease;
+            margin: 0 6px 0 4px;
+            opacity: 0.5;
         }
 
-        .social-links a:hover {
-            background-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .mobile-menu {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 992px) {
-            .about-content {
+        /* 响应式 */
+        @media (max-width: 700px) {
+            .resume-card {
+                padding: 1.8rem 1.2rem;
+            }
+            .resume-grid {
                 grid-template-columns: 1fr;
+                gap: 1.2rem;
             }
-            
-            .initiatives-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--primary);
+            .resume-header {
                 flex-direction: column;
-                padding: 1rem 0;
-                text-align: center;
-                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+                align-items: flex-start;
+                gap: 1rem;
             }
-            
-            nav ul.active {
-                display: flex;
+            .avatar {
+                width: 85px;
+                height: 85px;
+                font-size: 2.6rem;
             }
-            
-            nav ul li {
-                margin: 0;
-                padding: 0.8rem 0;
+            .title-group h1 {
+                font-size: 2.2rem;
             }
-            
-            .mobile-menu {
-                display: block;
+            .title-group .subhead {
+                font-size: 1rem;
             }
-            
-            .initiatives-grid {
-                grid-template-columns: 1fr;
+            .contact-short {
+                gap: 0.6rem 1.2rem;
+                font-size: 0.9rem;
             }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
+            .entry-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.2rem;
             }
         }
 
-        /* Animation for stats counter */
-        .counter {
-            transition: all 0.5s ease;
+        @media (max-width: 450px) {
+            .resume-card {
+                padding: 1.2rem 0.8rem;
+            }
+            .skill-tags {
+                gap: 6px;
+            }
+            .skill-tag {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.8rem;
+            }
         }
+
+        /* 工具类 */
+        .mt-1 { margin-top: 0.5rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .text-soft { color: #3d5c7c; }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container nav-container">
-            <div class="logo">
-                <i class="fas fa-seedling"></i>
-                <span>Green Network</span>
-            </div>
-            <nav>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#initiatives">Initiatives</a></li>
-                    <li><a href="#get-involved">Get Involved</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <div class="resume-card">
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container hero-content">
-            <h1>Protect Our Planet, Preserve Our Future</h1>
-            <p>Join the global movement to create a sustainable world through conservation, education, and community action.</p>
-            <a href="#get-involved" class="btn">Join Our Network</a>
-        </div>
-    </section>
+        <!-- ====== 头部 ====== -->
+        <header class="resume-header">
+            <div class="avatar" aria-label="头像占位">👤</div>
+            <div class="title-group">
+                <h1>林 语 晨</h1>
+                <div class="subhead">全栈开发 · 5年经验</div>
+                <div class="contact-short">
+                    <span>📧 <i>yuchen.lin@dev.me</i></span>
+                    <span>📱 <i>+86 138 0001 1234</i></span>
+                    <span>📍 <i>中国 · 上海</i></span>
+                </div>
+            </div>
+        </header>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Green Network</h2>
-                <p>We are a global community dedicated to environmental protection and sustainable development.</p>
-            </div>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Team planting trees">
-                </div>
-                <div class="about-text">
-                    <h3>Our Mission</h3>
-                    <p>Green Network is committed to creating a sustainable future by protecting natural ecosystems, promoting renewable energy, and empowering communities to take environmental action.</p>
-                    <p>Founded in 2010, we've grown from a small grassroots organization to an international network with over 50,000 members across 120 countries.</p>
-                    <p>Our approach combines scientific research, community engagement, and policy advocacy to address the most pressing environmental challenges of our time.</p>
-                    <a href="#" class="btn">Learn More</a>
-                </div>
-            </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <i class="fas fa-tree"></i>
-                    <h3 class="counter" data-target="2500000">0</h3>
-                    <p>Trees Planted</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <h3 class="counter" data-target="50000">0</h3>
-                    <p>Active Members</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-globe-americas"></i>
-                    <h3 class="counter" data-target="120">0</h3>
-                    <p>Countries Reached</p>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-recycle"></i>
-                    <h3 class="counter" data-target="1500">0</h3>
-                    <p>Cleanup Projects</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        <!-- ====== 主体栅格 ====== -->
+        <div class="resume-grid">
 
-    <!-- Initiatives Section -->
-    <section class="initiatives" id="initiatives">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Initiatives</h2>
-                <p>Discover the key programs and projects we're implementing to protect our planet.</p>
-            </div>
-            <div class="initiatives-grid">
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://dialogue.earth/content/uploads/2021/04/lessons-from-the-rush-to-reforest-china-dialogue-2400x1599.jpg" alt="Reforestation">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Global Reforestation</h3>
-                        <p>Planting millions of trees worldwide to restore ecosystems, combat climate change, and protect biodiversity.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1621451537084-482c73073a0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Ocean Conservation">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Ocean Conservation</h3>
-                        <p>Protecting marine ecosystems, reducing plastic pollution, and promoting sustainable fishing practices.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-                <div class="initiative-card">
-                    <div class="initiative-img">
-                        <img src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80" alt="Renewable Energy">
-                    </div>
-                    <div class="initiative-content">
-                        <h3>Renewable Energy</h3>
-                        <p>Promoting solar, wind, and other clean energy sources to reduce dependence on fossil fuels.</p>
-                        <a href="#" class="btn">Learn More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <!-- 左侧栏 -->
+            <aside class="left-panel">
 
-    <!-- CTA Section -->
-    <section class="cta" id="get-involved">
-        <div class="container">
-            <h2>Join Our Global Movement</h2>
-            <p>Together, we can create a sustainable future for generations to come. Every action counts, no matter how small.</p>
-            <a href="#" class="btn">Become a Member</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>Green Network</h3>
-                    <p>We are dedicated to protecting our planet through collaborative action, education, and sustainable solutions.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <!-- 个人简介 -->
+                <section class="section">
+                    <div class="section-title">📋 关于我</div>
+                    <div class="profile-text">
+                        热爱技术，专注产品体验。拥有全栈开发能力，善于从业务角度推动技术落地。
+                        乐于协作，持续探索前沿工程实践。
                     </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#initiatives">Initiatives</a></li>
-                        <li><a href="#get-involved">Get Involved</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                </section>
+
+                <!-- 专业技能 -->
+                <section class="section">
+                    <div class="section-title">⚙️ 技术栈</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">JavaScript / TS</span>
+                        <span class="skill-tag">React & Next.js</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Python (Flask)</span>
+                        <span class="skill-tag">Java (Spring)</span>
+                        <span class="skill-tag">Docker / K8s</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">AWS (S3/EC2)</span>
+                        <span class="skill-tag">Git & CI/CD</span>
+                    </div>
+                </section>
+
+                <!-- 语言 & 兴趣 -->
+                <section class="section">
+                    <div class="section-title">🌐 语言 · 兴趣</div>
+                    <ul class="info-list">
+                        <li><span class="label">中文</span><span class="value">母语 / 写作</span></li>
+                        <li><span class="label">英语</span><span class="value">专业工作 (IELTS 7.5)</span></li>
+                        <li><span class="label">日语</span><span class="value">日常会话 (N3)</span></li>
+                        <li style="border-bottom: none; padding-top: 0.8rem; justify-content: flex-start; gap: 1.2rem; flex-wrap: wrap;">
+                            <span class="label">🎯 兴趣</span>
+                            <span class="value" style="font-weight: 400;">开源 · 摄影 · 户外</span>
+                        </li>
                     </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Our Programs</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Reforestation</a></li>
-                        <li><a href="#">Ocean Cleanup</a></li>
-                        <li><a href="#">Wildlife Protection</a></li>
-                        <li><a href="#">Climate Education</a></li>
-                        <li><a href="#">Sustainable Agriculture</a></li>
+                </section>
+
+                <!-- 证书 / 亮点 -->
+                <section class="section">
+                    <div class="section-title">🏅 认证</div>
+                    <ul class="info-list" style="font-size: 0.95rem;">
+                        <li><span class="label">AWS Certified</span><span class="value">Solutions Architect</span></li>
+                        <li><span class="label">Oracle</span><span class="value">Java 认证 (OCP)</span></li>
+                        <li style="border-bottom: none;"><span class="label">Scrum</span><span class="value">PSM I</span></li>
                     </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> Copper Creek Drive, New York</p>
-                    <p><i class="fas fa-phone"></i> +1 (312) 171-0771</p>
-                    <p><i class="fas fa-envelope"></i> support@greennetwork.org</p>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Green Network. All rights reserved.</p>
-            </div>
+                </section>
+
+            </aside>
+
+            <!-- 右侧栏 (主要经历) -->
+            <main class="right-panel">
+
+                <!-- 工作经历 -->
+                <section class="section">
+                    <div class="section-title">💼 工作经历</div>
+
+                    <div class="entry">
+                        <div class="entry-header">
+                            <span class="entry-title">全栈工程师 · 星云科技</span>
+                            <span class="entry-date">2022 – 至今</span>
+                        </div>
+                        <div class="entry-sub">上海 · 研发中心</div>
+                        <div class="entry-desc">
+                            <ul>
+                                <li>参与核心 SaaS 产品前端架构升级，采用 React + TypeScript 重构，首屏性能提升 34%。</li>
+                                <li>设计并实现微服务网关层 (Node.js + Express)，对接内部 12+ 服务，统一鉴权与日志。</li>
+                                <li>推动 CI/CD 流程优化，基于 GitHub Actions 实现自动化测试与部署，迭代效率提高 40%。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="entry">
+                        <div class="entry-header">
+                            <span class="entry-title">Java 开发 · 云创互动</span>
+                            <span class="entry-date">2019 – 2022</span>
+                        </div>
+                        <div class="entry-sub">北京 · 技术部</div>
+                        <div class="entry-desc">
+                            <ul>
+                                <li>负责电商中台订单系统开发，基于 Spring Cloud 构建，日均处理 50w+ 订单请求。</li>
+                                <li>优化 MySQL 慢查询与缓存策略 (Redis)，接口响应时间从 1.2s 降至 200ms 内。</li>
+                                <li>参与技术文档编写与新人指导，团队内部分享 10+ 场技术专题。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 项目精选 -->
+                <section class="section">
+                    <div class="section-title">📁 项目精选</div>
+
+                    <div class="entry">
+                        <div class="entry-header">
+                            <span class="entry-title">「灵境」低代码平台</span>
+                            <span class="entry-date">2023 · 独立贡献</span>
+                        </div>
+                        <div class="entry-desc">
+                            基于 React + Formily 构建动态表单引擎，支持可视化配置与 JSON Schema 驱动，
+                            目前已在公司内部 3 条业务线落地。实现拖拽式布局与自定义组件扩展。
+                        </div>
+                    </div>
+
+                    <div class="entry" style="margin-top: 1rem;">
+                        <div class="entry-header">
+                            <span class="entry-title">个人博客 & 技术周刊</span>
+                            <span class="entry-date">2021 – 至今</span>
+                        </div>
+                        <div class="entry-desc">
+                            使用 Next.js + MDX 搭建技术博客，集成评论与搜索。每月更新 2~3 篇技术文章，
+                            累计阅读 8w+，并开源了博客主题模板 (GitHub 300+ star)。
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 教育 -->
+                <section class="section">
+                    <div class="section-title">🎓 教育背景</div>
+                    <div class="entry">
+                        <div class="entry-header">
+                            <span class="entry-title">复旦大学 · 计算机科学与技术</span>
+                            <span class="entry-date">2015 – 2019</span>
+                        </div>
+                        <div class="entry-sub">学士学位 · GPA 3.8/4.0</div>
+                        <div class="entry-desc" style="margin-top: 0.3rem;">
+                            主修课程：数据结构、操作系统、数据库、计算机网络。毕业设计《基于知识图谱的智能问答系统》获院级优秀。
+                        </div>
+                    </div>
+                </section>
+
+            </main>
         </div>
-    </footer>
 
-    <script>
-        // Mobile Menu Toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('nav ul').classList.toggle('active');
-        });
+        <!-- 脚注: 纯装饰 -->
+        <footer style="margin-top: 2.5rem; border-top: 1px solid #e4ecf5; padding-top: 1.2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; font-size: 0.8rem; color: #4b6c8c;">
+            <span>✨ 纯 HTML · 极简简历</span>
+            <span style="letter-spacing: 0.3px;">📅 最后更新 · 2026 年 8 月</span>
+        </footer>
 
-        // Counter Animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter');
-            const speed = 200; // The lower the slower
-            
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                
-                const inc = target / speed;
-                
-                if(count < target) {
-                    counter.innerText = Math.ceil(count + inc);
-                    setTimeout(animateCounters, 1);
-                } else {
-                    counter.innerText = target;
-                }
-            });
-        }
-
-        // Initialize counters when page loads
-        window.addEventListener('load', animateCounters);
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    document.querySelector('nav ul').classList.remove('active');
-                }
-            });
-        });
-    </script>
+    </div>
+    <!-- 无任何JavaScript，完全符合“纯HTML”要求 -->
 </body>
-
 </html>
